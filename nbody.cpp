@@ -13,6 +13,19 @@ class Particle{
 	double vx, vy;//velocity
 	double fx, fy;//force
 	double mass;
+
+	Particle(){
+		rx = initPos();
+		ry = initPos();
+		vx = initPos();
+		vy = initPos();
+		mass = 1.98892e30*rand()*10 + 1e20;
+	}
+	
+	double initPos(){
+		return 1e18*exp(-1.8)*(.5 - rand());
+	}
+
 	void update(){
 		vx += T*fx/mass;
 		vy += T*fy/mass;
@@ -33,6 +46,13 @@ class Particle{
 		this.fy += F * dy/dist;
 		//MAYBE - depends how i do the actual simulation
 		b.fx += F * dx/dist;
-		a.fy += F * dy/dist;
+		b.fy += F * dy/dist;
 	}
+}
+
+int main(){
+	Particles parts[N];
+	srand(time(NULL));
+	for(auto &p : parts)
+		p.update();
 }
