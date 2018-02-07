@@ -45,11 +45,11 @@ class Particle{
 		this->fx += F * dx/dist;
 		this->fy += F * dy/dist;
 		//MAYBE - depends how i do the actual simulation
-		b.fx += F * dx/dist;
-		b.fy += F * dy/dist;
+		//b.fx += F * dx/dist;
+		//b.fy += F * dy/dist;
 	}
 	void printParticle(){
-		std::cout << mass << std::endl;
+		std::cout << "X: " << rx << std::endl << "Y: " << ry << std::endl;
 	}
 };
 
@@ -58,5 +58,10 @@ int main(){
 	srand(time(NULL));
 	for(auto &p : parts)
 		p.update();
-	parts[1].printParticle();
+	for(auto &p : parts)
+		for(auto &p2 : parts){
+			p.addForce(p2);
+		}
+	for(auto &p : parts)
+		p.printParticle();
 }
