@@ -14,6 +14,7 @@ class Particle{
 	double fx, fy;//force
 	double mass;
 
+	public:
 	Particle(){
 		rx = initPos();
 		ry = initPos();
@@ -21,7 +22,6 @@ class Particle{
 		vy = initPos();
 		mass = 1.98892e30*rand()*10 + 1e20;
 	}
-	
 	double initPos(){
 		return 1e18*exp(-1.8)*(.5 - rand());
 	}
@@ -38,21 +38,25 @@ class Particle{
 	}
 	void addForce(Particle b){
 		double EPS = 2e3;//helps avoid infinity :shrug:
-		double dx = this.rx - b.rx;
-		double dy = this.ry - b.ry;
+		double dx = this->rx - b.rx;
+		double dy = this->ry - b.ry;
 		double dist = sqrt(dx*dx + dy*dy);
-		double F = (G*this.mass*b.mass)/(pow(dist,2)+pow(EPS,2));
-		this.fx += F * dx/dist;
-		this.fy += F * dy/dist;
+		double F = (G*this->mass*b.mass)/(pow(dist,2)+pow(EPS,2));
+		this->fx += F * dx/dist;
+		this->fy += F * dy/dist;
 		//MAYBE - depends how i do the actual simulation
 		b.fx += F * dx/dist;
 		b.fy += F * dy/dist;
 	}
-}
+	void printParticle(){
+		std::cout << mass << std::endl;
+	}
+};
 
 int main(){
-	Particles parts[N];
+	Particle parts[N];
 	srand(time(NULL));
 	for(auto &p : parts)
 		p.update();
+	parts[1].printParticle();
 }
